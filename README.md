@@ -83,3 +83,13 @@ REPORT
 ```
 
 **Output:** `3,3,NORTH`
+
+## How to run the app
+
+In terminal run the following command
+
+```
+node index <path/file.txt>
+```
+
+e.g node index sample/exampleA.txt

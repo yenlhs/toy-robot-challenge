@@ -1,8 +1,6 @@
 import fs from "fs";
 import { TABLE_SIZE, LEFT, RIGHT, MOVE_X, MOVE_Y } from "./constants.js";
 
-const args = process.argv.slice(2);
-
 // Robot position and direction initialization
 let current_location_x = null;
 let current_location_y = null;
@@ -49,6 +47,10 @@ const executeCommand = (command) => {
 		const [x, y, direction] = cmd.split(" ")[1].split(",");
 		current_location_x = parseInt(x);
 		current_location_y = parseInt(y);
+		if (!isValidPosition(current_location_x, current_location_y)) {
+			console.error("Invalid position. Position must be within the table.");
+			return false;
+		}
 		current_direction = direction;
 		return false;
 	}
@@ -85,6 +87,8 @@ const executeCommand = (command) => {
 	}
 };
 
+const args = process.argv.slice(2);
+
 if (args.length !== 1) {
 	console.error("Usage: node index.js <input_file>");
 	process.exit(1);
@@ -101,5 +105,8 @@ const fileContent = fs.readFileSync(inputFile, "utf8");
 const lines = fileContent.split("\n");
 
 for (const line of lines) {
-	executeCommand(line);
+	const shouldExit = executeCommand(line);
+	if (shouldExit) {
+		break;
+	}
 }
