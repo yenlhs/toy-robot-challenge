@@ -41,19 +41,20 @@ const executeCommand = (command) => {
 
 	if (cmd.startsWith("PLACE")) {
 		if (!validatePlaceCommand(cmd)) {
-			return false;
+			return true;
 		}
 
 		const [x, y, direction] = cmd.split(" ")[1].split(",");
 		current_location_x = parseInt(x);
 		current_location_y = parseInt(y);
+		current_direction = direction;
+
 		if (!isValidPosition(current_location_x, current_location_y)) {
 			console.error("Invalid position. Position must be within the table.");
-			return false;
+			return true;
 		}
-		current_direction = direction;
-		return false;
 	}
+
 	if (!isRobotPlaced()) {
 		return false;
 	}
